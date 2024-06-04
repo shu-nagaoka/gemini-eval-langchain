@@ -1,5 +1,3 @@
-google-cloud-storage
-# langchain
 langchain_community
 google-cloud-aiplatform
 langchain-google-vertexai
