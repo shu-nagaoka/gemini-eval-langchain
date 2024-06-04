@@ -2,8 +2,6 @@ from typing import Any, List, Mapping, Optional
 from langchain.llms.base import LLM
 from langchain.chains.question_answering import load_qa_chain
 import google.generativeai as genai
-from dotenv import load_dotenv
-load_dotenv()
 
 # Gemini API用のカスタムLLMクラス
 class GeminiLLM(LLM):
