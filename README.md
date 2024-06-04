@@ -1,5 +1,7 @@
-# Get Started
-- このドキュメントは、Eval＿Gemini＿PDF質問応答システムのセットアップと起動方法について説明します。
+# Getting started
+- このアプリケーションは、Langchainを用いてGoogle Cloud Evaluation SDKとRAGの性能を評価するためのものです。
+- 同様の環境で動作させるため、以下の初期セットアップを完了させてください
+- 筆者の環境はMacOS.Xとなるため、実行する環境によっては差分が出る可能性があります。あらかじめご了承ください
 
 ## 前提条件
 - `venv` で `Python 3.10` を使用してください。
@@ -25,12 +27,12 @@ source ./venv/bin/activate # Windowsの場合は .\venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-3. pdfとdbディレクトリを作成します
+1. pdf用のディレクトリを作成します
 ```bash
 mkdir ./app/pdf
 ```
 
-4. 環境変数を設定します。`.env.example`をコピーしてプロジェクトルートに、`.env`ファイルを作成し、必要なAPI_KEYなどを設定します。
+1. 環境変数を設定します。`.env.example`をコピーしてプロジェクトルートに、`.env`ファイルを作成し、必要なAPI_KEYなどを設定します。
 
 ```.env
 # Google Cloud プロジェクト内で取得したAPIKEY
@@ -42,7 +44,6 @@ OPENAI_API_KEY=
 # Google CloudのProjectID
 PROJECT_ID=
 ```
-
 
 ## 起動方法
 - 以下のコマンドでアプリケーションを起動します。
@@ -62,7 +63,7 @@ python ./app/main.py
 ## 使用方法
 1. ブラウザで`http://localhost:7860`を開きます
 2. PDFファイルをアップロードし、Submitをクリックします
-3. DBにベクトル化されるので、以降は質問を送信することができます
+3. PDFがDBにベクトル化されるので、それ以降は質問を送信することができます
 4. 質問を送信すると、既存DBから回答をが返されます
 5. 同時に評価結果サマリーとディティールも表示されます
 
