@@ -21,18 +21,18 @@ python3.10 -m venv venv
 source ./venv/bin/activate # Windowsの場合は .\venv\Scripts\activate
 ```
 
-2. 必要なパッケージをインストールします。
+3. 必要なパッケージをインストールします。
 
 ```bash
 pip install -r requirements.txt
 ```
 
-1. pdf用のディレクトリを作成します
+4. pdf用のディレクトリを作成します
 ```bash
 mkdir ./app/pdf
 ```
 
-1. 環境変数を設定します。`.env.example`をコピーしてプロジェクトルートに、`.env`ファイルを作成し、必要なAPI_KEYなどを設定します。
+5. 環境変数を設定します。`.env.example`をコピーしてプロジェクトルートに、`.env`ファイルを作成し、必要なAPI_KEYなどを設定します。
 
 ```.env
 # Google Cloud プロジェクト内で取得したAPIKEY
