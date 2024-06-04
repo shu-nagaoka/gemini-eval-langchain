@@ -1,4 +1,4 @@
-# アプリケーションの説明
+# Get Started
 - このドキュメントは、Eval＿Gemini＿PDF質問応答システムのセットアップと起動方法について説明します。
 
 ## 前提条件
@@ -25,7 +25,12 @@ source ./venv/bin/activate # Windowsの場合は .\venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-3. 環境変数を設定します。`.env.example`をコピーしてプロジェクトルートに、`.env`ファイルを作成し、必要なAPI_KEYなどを設定します。
+3. pdfとdbディレクトリを作成します
+```bash
+mkdir ./app/pdf
+```
+
+4. 環境変数を設定します。`.env.example`をコピーしてプロジェクトルートに、`.env`ファイルを作成し、必要なAPI_KEYなどを設定します。
 
 ```.env
 # Google Cloud プロジェクト内で取得したAPIKEY
