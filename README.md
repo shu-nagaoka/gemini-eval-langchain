@@ -15,8 +15,8 @@ cd app-gemini-eval
 
 2. 仮想環境を作成し、アクティベートします。
 ```bash
-python -m venv venv
-source venv/bin/activate # Windowsの場合は venv\Scripts\activate
+python3.10 -m venv venv
+source ./venv/bin/activate # Windowsの場合は .\venv\Scripts\activate
 ```
 
 2. 必要なパッケージをインストールします。
@@ -25,11 +25,17 @@ source venv/bin/activate # Windowsの場合は venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-3. 環境変数を設定します。プロジェクトルートに、`.env`ファイルを作成し、必要なAPI_KEYなどを設定します。
+3. 環境変数を設定します。`.env.example`をコピーしてプロジェクトルートに、`.env`ファイルを作成し、必要なAPI_KEYなどを設定します。
 
 ```.env
-OPENAI_API_KEY=your_openai_api_key # 精度の都合上PDFのベクトル化のみに使用
-GOOGLE_API_KEY=your_google_api_key # Gemini APIによる質問応答に使用
+# Google Cloud プロジェクト内で取得したAPIKEY
+GEMINI_API_KEY=-
+
+# OpenAPIで取得したAPIKEY（ベクトル化に使用）
+OPENAI_API_KEY=
+
+# Google CloudのProjectID
+PROJECT_ID=
 ```
 
 
@@ -37,7 +43,7 @@ GOOGLE_API_KEY=your_google_api_key # Gemini APIによる質問応答に使用
 - 以下のコマンドでアプリケーションを起動します。
 
 ```bash
-python app/main.py
+python ./app/main.py
 ```
 
 ## ファイル構成
