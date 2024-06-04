@@ -1,5 +1,7 @@
 from utils.config import load_config
 from utils.interface import launch_interface
+from dotenv import load_dotenv
+load_dotenv()
 
 def main():
     load_config()

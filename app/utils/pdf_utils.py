@@ -3,11 +3,9 @@ import fitz
 import shutil
 import tempfile
 from langchain.schema import Document
-from dotenv import load_dotenv
 from .eval_task import evaluate_rag
 import google.generativeai as genai
 from .db_utils import format_eval_summary
-load_dotenv()
 
 PDF_DIRECTORY = os.path.join(os.path.dirname(__file__), '..', 'pdf')
 
