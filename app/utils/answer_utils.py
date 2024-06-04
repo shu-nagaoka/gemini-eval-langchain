@@ -5,10 +5,6 @@ import google.generativeai as genai
 from dotenv import load_dotenv
 load_dotenv()
 
-# Gemini APIの設定
-genai.configure(api_key='AIzaSyCiA-H5fUVo1mx-Am_yHpgNYFCsHCizIRg')
-MODEL_NAME="gemini-1.5-pro-001"
-
 # Gemini API用のカスタムLLMクラス
 class GeminiLLM(LLM):
     @property
@@ -16,7 +12,7 @@ class GeminiLLM(LLM):
         return "custom"
     def _call(self, prompt: str, stop: Optional[List[str]] = None, **kwargs: Any) -> str:
         """Gemini APIを呼び出してテキストを生成する"""
-        model = genai.GenerativeModel(MODEL_NAME)
+        model = genai.GenerativeModel("gemini-1.5-pro-001")
         response = model.generate_content(prompt)
         return response.text.strip()
 

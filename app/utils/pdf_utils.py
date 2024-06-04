@@ -4,9 +4,12 @@ import shutil
 import tempfile
 from langchain.schema import Document
 from dotenv import load_dotenv
+from .eval_task import evaluate_rag
+import google.generativeai as genai
+from .db_utils import format_eval_summary
 load_dotenv()
 
-PDF_DIRECTORY = "/Users/tnoce/env/work/miyazakishi/google-vais/app-gemini-eval/app/pdf"
+PDF_DIRECTORY = os.path.join(os.path.dirname(__file__), '..', 'pdf')
 
 def check_existing_pdf(pdf_path):
     """ローカルにすでにPDFがあるかを確認する"""
@@ -51,3 +54,23 @@ def move_pdf_to_directory(pdf_path, directory):
     new_pdf_path = os.path.join(directory, os.path.basename(pdf_path))
     shutil.move(pdf_path, new_pdf_path)
     return new_pdf_path
+
+async def get_answer_from_pdf(pdf_path, query):
+    """PDFから抽出したテキストを使用して質問に回答する"""
+    chunks = extract_chunks_from_pdf(pdf_path)
+    if not chunks:
+        return "PDFからテキストを抽出できませんでした。", None, None
+
+    context = " ".join(chunk.page_content for chunk in chunks)
+    model = genai.GenerativeModel('gemini-1.5-flash-001')
+    response = model.generate_content(
+        f"あなたは有能なアシスタントです。\n\n"
+        f"以下のコンテキストに基づいて質問に答えてください。\n\n"
+        f"コンテキスト: {context}\n\n"
+        f"質問: {query}"
+    )
+
+    eval_summary, formatted_response = await evaluate_rag(query, context, response.text.strip(), instruction="事実に基づく回答のみを提供してください。")
+    print("評価結果サマリー:", eval_summary)
+    print("評価結果テーブル(構造化済み):", formatted_response)
+    return response.text.strip(), eval_summary, format_eval_summary(eval_summary), formatted_response.strip()

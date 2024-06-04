@@ -1,0 +1,23 @@
+google-cloud-storage
+# langchain
+langchain_community
+google-cloud-aiplatform
+langchain-google-vertexai
+pypdf
+unstructured
+Pillow
+pillow_heif
+opencv-python
+pdf2image
+unstructured_inference
+pytesseract
+pikepdf
+gradio>=3.14
+PdfReader
+chromadb
+pdfminer.six==20191110
+langchain_openai
+fitz
+google-generativeai>=0.5.4
+pycryptodome
+pymupdf

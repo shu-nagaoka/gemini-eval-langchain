@@ -19,7 +19,6 @@ python -m venv venv
 source venv/bin/activate # Windowsの場合は venv\Scripts\activate
 ```
 
-
 2. 必要なパッケージをインストールします。
 
 ```bash
