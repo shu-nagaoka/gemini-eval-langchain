@@ -312,6 +312,6 @@ bin/models/**
 
 # Others
 *.json
-*.txt
+# *.txt
 *.csv
 *.pdf
