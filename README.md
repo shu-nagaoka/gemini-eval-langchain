@@ -36,7 +36,7 @@ mkdir ./app/pdf
 
 ```.env
 # Google Cloud プロジェクト内で取得したAPIKEY
-GEMINI_API_KEY=-
+GEMINI_API_KEY=
 
 # OpenAPIで取得したAPIKEY（ベクトル化に使用）
 OPENAI_API_KEY=
