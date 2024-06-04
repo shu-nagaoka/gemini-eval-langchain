@@ -10,7 +10,7 @@
 
 ```bash
 git clone <リポジトリURL>
-cd app-gemini-eval
+cd gemini-eval-langchain
 ```
 
 2. 仮想環境を作成し、アクティベートします。
@@ -48,18 +48,21 @@ python ./app/main.py
 
 ## ファイル構成
 - `app/main.py`: アプリケーションのエントリーポイント
+- `app/utils/answer_utils.py`: 質問応答のためのユーティリティ
 - `app/utils/db_utils.py`: データベース関連のユーティリティ
 - `app/utils/interface.py`: Gradioインターフェースの設定
-- `app/utils/eval_task.py`: 評価タスクの実行
+- `app/utils/pdf_utils.py`: PDF処理のためのユーティリティ
+- `app/utils/processing.py`: PDFの処理とクエリに対する回答生成
 
 ## 使用方法
 1. ブラウザで`http://localhost:7860`を開きます
-2. PDFファイルをアップロードし、質問を入力します
-3. 「新規PDFからの回答」および「既存DBからの回答」が表示されます。
-4. 評価結果サマリーとディティールも表示されます。
+2. PDFファイルをアップロードし、Submitをクリックします
+3. DBにベクトル化されるので、以降は質問を送信することができます
+4. 質問を送信すると、既存DBから回答をが返されます
+5. 同時に評価結果サマリーとディティールも表示されます
 
 ## 注意事項
 - 環境変数の設定が正しいことを確認してください。
 - 必要なAPIキーを取得し、`.env` ファイルに設定してください。
 
-以上でセットアップと起動方法の説明は終了です。問題が発生した場合は、リポジトリのIssueに報告してください。# gemini-eval-langchain
+以上でセットアップと起動方法の説明は終了です。問題が発生した場合は、リポジトリのIssueに報告してください。
