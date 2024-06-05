@@ -5,6 +5,8 @@ from utils.pdf_utils import check_existing_pdf, extract_chunks_from_pdf, save_te
 from utils.db_utils import get_answer_from_db, vectorstore
 from utils.answer_utils import get_answer_from_documents
 import google.generativeai as genai
+from dotenv import load_dotenv
+load_dotenv()
 
 PDF_DIRECTORY = os.path.join(os.path.dirname(__file__), '..', 'pdf')
 

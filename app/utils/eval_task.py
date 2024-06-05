@@ -3,6 +3,8 @@ import pandas as pd
 import anyio
 import asyncio
 import google.generativeai as genai
+from dotenv import load_dotenv
+load_dotenv()
 
 async def evaluate_rag(query, context, answer, instruction=""):
     """RAGの評価を行い、評価結果のサマリーと詳細を返す"""

@@ -4,6 +4,8 @@ from langchain.embeddings import OpenAIEmbeddings
 import google.generativeai as genai
 from .eval_task import evaluate_rag
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 client = OpenAI()
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
