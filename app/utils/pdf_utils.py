@@ -19,7 +19,7 @@ def check_existing_pdf(pdf_path):
         print(f"{actual_pdf_path}が存在してます。")
         return True
     else:
-        print(f"{actual_pdf_path}がPDFファイルが存在しないっす。")
+        print(f"{actual_pdf_path}がPDFファイルが存在しないです")
         return False
 
 def extract_chunks_from_pdf(pdf_path, chunk_size=1000):
