@@ -59,6 +59,8 @@ python ./app/main.py
 - `app/utils/interface.py`: Gradioインターフェースの設定
 - `app/utils/pdf_utils.py`: PDF処理のためのユーティリティ
 - `app/utils/processing.py`: PDFの処理とクエリに対する回答生成
+- `app/utils/eval_task.py`: RAGの評価を行うためのユーティリティ
+
 
 ## 使用方法
 1. ブラウザで`http://localhost:7860`を開きます
