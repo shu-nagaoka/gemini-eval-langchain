@@ -69,6 +69,23 @@ python ./app/main.py
 4. 質問を送信すると、既存DBから回答をが返されます
 5. 同時に評価結果サマリーとディティールも表示されます
 
+
+## 依存関係
+- 以下依存関係を持ちます。
+
+```mermaid
+graph TD
+    A[main.py] -->|load_config| B[config.py]
+    A -->|launch_interface| C[interface.py]
+    C -->|process_pdf| D[processing.py]
+    D -->|get_answer_from_db| E[db_utils.py]
+    D -->|get_answer_from_documents| F[answer_utils.py]
+    D -->|check_existing_pdf, extract_chunks_from_pdf| G[pdf_utils.py]
+    E -->|evaluate_rag| H[eval_task.py]
+    F -->|evaluate_rag| H
+    G -->|evaluate_rag| H
+```
+
 ## 注意事項
 - 環境変数の設定が正しいことを確認してください。
 - 必要なAPIキーを取得し、`.env` ファイルに設定してください。
