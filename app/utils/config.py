@@ -6,8 +6,6 @@ load_dotenv()
 
 GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
 PROJECT_ID = os.getenv('PROJECT_ID')
-GCS_BUCKET_NAME = os.getenv('GCS_BUCKET_NAME')
-
 
 def load_config():
     vertexai.init(project=PROJECT_ID)

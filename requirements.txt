@@ -18,4 +18,3 @@ langchain_openai
 google-generativeai>=0.5.4
 pycryptodome
 pymupdf
-google-cloud-storage
