@@ -8,21 +8,16 @@ from .eval_task import evaluate_rag
 import google.generativeai as genai
 from .db_utils import format_eval_summary
 from google.cloud import storage
-
-
 from dotenv import load_dotenv
 load_dotenv()
 
 PDF_DIRECTORY = os.path.join(os.path.dirname(__file__), '..', 'pdf')
 
-
 import logging
 from datetime import datetime
 current_date = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
 log_filename = f"logs-{current_date}.log"
-logging.basicConfig(filename=log_filename,
-                    level=logging.DEBUG,
-                    format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(filename=log_filename, level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def upload_to_gcs(temp_file_path, bucket_name, destination_blob_name):
     """GCSバケットにファイルをアップロードする"""

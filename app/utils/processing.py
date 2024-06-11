@@ -17,9 +17,7 @@ import logging
 from datetime import datetime
 current_date = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
 log_filename = f"logs-{current_date}.log"
-logging.basicConfig(filename=log_filename,
-                    level=logging.DEBUG,
-                    format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(filename=log_filename, level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def get_pdf_path(pdf_file):
     """PDFファイルのパスを取得する"""

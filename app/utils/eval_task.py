@@ -6,14 +6,11 @@ import google.generativeai as genai
 from dotenv import load_dotenv
 load_dotenv()
 
-
 import logging
 from datetime import datetime
 current_date = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
 log_filename = f"logs-{current_date}.log"
-logging.basicConfig(filename=log_filename,
-                    level=logging.DEBUG,
-                    format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(filename=log_filename, level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 async def evaluate_rag(query, context, answer, instruction=""):
     """RAGの評価を行い、評価結果のサマリーと詳細を返す"""

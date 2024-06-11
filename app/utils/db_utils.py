@@ -1,31 +1,25 @@
 from openai import OpenAI
 from langchain_community.vectorstores import Chroma
-from langchain.embeddings import OpenAIEmbeddings
+from .embeddings import GeminiEmbeddings
 import google.generativeai as genai
 from .eval_task import evaluate_rag
 import os
 from dotenv import load_dotenv
 load_dotenv()
 
+GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
 PERSIST_DIRECTORY = os.path.join(os.path.dirname(__file__), '..', 'db')
-EMBED_MODEL = os.getenv('EMBED_MODEL')
-
-# GEMINIのEMBEDDINGモデルを使用する場合
-# GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
-# OPENAIのEMBEDDINGモデルを使用する場合
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
-
-client = OpenAI()
-embeddings = OpenAIEmbeddings(model=EMBED_MODEL)
-vectorstore = Chroma(persist_directory=PERSIST_DIRECTORY, embedding_function=embeddings)
 
 import logging
 from datetime import datetime
 current_date = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
 log_filename = f"logs-{current_date}.log"
-logging.basicConfig(filename=log_filename,
-                    level=logging.DEBUG,
-                    format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(filename=log_filename, level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+
+
+EMBED_MODEL = os.getenv('EMBED_MODEL')
+embeddings = GeminiEmbeddings()
+vectorstore = Chroma(persist_directory=PERSIST_DIRECTORY, embedding_function=embeddings)
 
 def format_eval_summary(eval_summary):
     return "\n".join([f"{key}: {value}" for key, value in eval_summary.items()])
@@ -33,7 +27,7 @@ def format_eval_summary(eval_summary):
 async def get_answer_from_db(query):
     """既存のベクトルDBから回答を取得する"""
     logging.info(f"get_answer_from_db関数: {query}")
-    results = vectorstore.similarity_search(query, k=5)
+    results = vectorstore.similarity_search(query, k=7)
     logging.info(f"get_answer_from_db関数:{results}")
 
     if results:
@@ -54,4 +48,4 @@ async def get_answer_from_db(query):
         logging.info(f"評価結果テーブル(構造化済み): {formatted_response}")
         return response.text.strip(), eval_summary, format_eval_summary(eval_summary), formatted_response.strip()
     else:
-        return "データベースに一致するドキュメントがありませんでした。", None, None
+        return "データベースに一致するドキュメントがありませんでした。", None, None, None
