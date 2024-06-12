@@ -5,6 +5,9 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
+"""
+GeminiでEmbeddingを行う
+"""
 EMBED_MODEL = os.getenv('EMBED_MODEL')
 
 class GeminiEmbeddings(Embeddings):
@@ -28,7 +31,6 @@ class GeminiEmbeddings(Embeddings):
         """単一のテキストを埋め込む"""
         if not text:
             raise ValueError("'text' 引数は空にできません。")
-
         embedding = genai.embed_content(
             model=self.model_name,
             content=text,

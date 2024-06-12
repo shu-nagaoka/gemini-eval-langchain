@@ -11,12 +11,19 @@ from google.cloud import storage
 from dotenv import load_dotenv
 load_dotenv()
 
+GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
+CHUNK_SIZE = os.getenv('CHUNK_SIZE')
 PDF_DIRECTORY = os.path.join(os.path.dirname(__file__), '..', 'pdf')
+GEMINI_MODEL = os.getenv('GEMINI_MODEL')
 
 import logging
 from datetime import datetime
 current_date = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
-log_filename = f"logs-{current_date}.log"
+
+log_directory = os.path.join(os.path.dirname(__file__), '..', 'logs')
+os.makedirs(log_directory, exist_ok=True)
+log_filename = os.path.join(log_directory, f"logs-{current_date}.log")
+
 logging.basicConfig(filename=log_filename, level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def upload_to_gcs(temp_file_path, bucket_name, destination_blob_name):
@@ -32,7 +39,7 @@ def upload_to_gcs(temp_file_path, bucket_name, destination_blob_name):
         logging.error(f"ファイルのアップロードに失敗しました。{e}")
         return None
 
-def extract_chunks_from_pdf(pdf_path, chunk_size=1000):
+def extract_chunks_from_pdf(pdf_path, chunk_size=int(CHUNK_SIZE)):
     """PDFからページごとにチャンクを抽出する"""
     chunks = []
     doc = fitz.open(pdf_path)
@@ -63,7 +70,7 @@ async def get_answer_from_pdf(pdf_path, query):
         return "PDFからテキストを抽出できませんでした。", None, None
 
     context = " ".join(chunk.page_content for chunk in chunks)
-    model = genai.GenerativeModel('gemini-1.5-flash-001')
+    model = genai.GenerativeModel(GEMINI_MODEL)
     response = model.generate_content(
         f"あなたは有能なアシスタントです。\n\n"
         f"以下のコンテキストに基づいて質問に答えてください。\n\n"

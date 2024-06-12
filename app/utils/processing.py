@@ -3,7 +3,7 @@ import os
 import anyio
 from utils.pdf_utils import extract_chunks_from_pdf, save_temp_pdf, upload_to_gcs
 from utils.db_utils import get_answer_from_db, vectorstore
-from utils.answer_utils import get_answer_from_documents
+# from utils.answer_utils import get_answer_from_documents
 import google.generativeai as genai
 import tempfile
 from google.cloud import storage
@@ -16,7 +16,12 @@ GCS_BUCKET_NAME = os.getenv('GCS_BUCKET_NAME')
 import logging
 from datetime import datetime
 current_date = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
-log_filename = f"logs-{current_date}.log"
+# log_filename = f"logs-{current_date}.log"
+
+log_directory = os.path.join(os.path.dirname(__file__), '..', 'logs')
+os.makedirs(log_directory, exist_ok=True)
+log_filename = os.path.join(log_directory, f"logs-{current_date}.log")
+
 logging.basicConfig(filename=log_filename, level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def get_pdf_path(pdf_file):
@@ -42,8 +47,11 @@ def check_existing_pdf_in_gcs(bucket_name, blob_name):
 async def async_process_pdf(pdf_file, query):
     """PDFを処理し、クエリに対する回答を生成する (非同期版)"""
     if pdf_file is None:
-        db_answer, eval_summary, eval_summary_formatted, eval_table = await get_answer_from_db(query)
-        return "PDFファイルが選択されていません。", db_answer, eval_summary_formatted, eval_table
+        if query:
+            db_answer, eval_summary, eval_summary_formatted, eval_table = await get_answer_from_db(query)
+            return "PDFファイルが選択されていません。", db_answer, eval_summary_formatted, eval_table
+        else:
+            return "PDFファイルが選択されておらず、クエリも提供されていません。", None, None, None
 
     pdf_path = get_pdf_path(pdf_file)
     if isinstance(pdf_path, io.BytesIO):
@@ -56,7 +64,10 @@ async def async_process_pdf(pdf_file, query):
 
     # GCSバケット内にPDFファイルが存在するかを確認
     if check_existing_pdf_in_gcs(GCS_BUCKET_NAME, destination_blob_name):
-        db_answer, eval_summary, eval_summary_formatted, eval_table = await get_answer_from_db(query)
+        if query:
+            db_answer, eval_summary, eval_summary_formatted, eval_table = await get_answer_from_db(query)
+        else:
+            db_answer, eval_summary, eval_summary_formatted, eval_table = "既存のPDFが見つかりましたが、クエリが提供されていません。", None, None, None
         return "このPDFはGCSバケットに保存されており、すでに処理済みです。", db_answer, eval_summary_formatted, eval_table
     else:
         # GCSへのuploadの開始

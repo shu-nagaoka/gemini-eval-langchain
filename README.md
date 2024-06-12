@@ -74,16 +74,26 @@ python ./app/main.py
 - 以下依存関係を持ちます。
 
 ```mermaid
-graph TD
+graph TD;
     A[main.py] -->|load_config| B[config.py]
     A -->|launch_interface| C[interface.py]
-    C -->|process_pdf| D[processing.py]
-    D -->|get_answer_from_db| E[db_utils.py]
-    D -->|get_answer_from_documents| F[answer_utils.py]
-    D -->|check_existing_pdf, extract_chunks_from_pdf| G[pdf_utils.py]
-    E -->|evaluate_rag| H[eval_task.py]
-    F -->|evaluate_rag| H
-    G -->|evaluate_rag| H
+    C -->|iface.launch| D[processing.py]
+    D -->|process_pdf| E[processing.py]
+    E -->|async_process_pdf| F[processing.py]
+    F -->|extract_chunks_from_pdf| G[pdf_utils.py]
+    F -->|save_temp_pdf| H[pdf_utils.py]
+    F -->|upload_to_gcs| I[pdf_utils.py]
+    F -->|get_answer_from_db| J[db_utils.py]
+    F -->|add_chunks_to_vectorstore| K[db_utils.py]
+    J -->|GeminiEmbeddings| L[embeddings.py]
+    J -->|evaluate_rag| M[eval_task.py]
+    G -->|evaluate_rag| M
+    H -->|GenerativeModel| N[google.generativeai]
+    I -->|GenerativeModel| N
+    J -->|GenerativeModel| N
+    K -->|GenerativeModel| N
+    L -->|GenerativeModel| N
+    M -->|GenerativeModel| N
 ```
 
 ## 注意事項
