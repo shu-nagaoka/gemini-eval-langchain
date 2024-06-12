@@ -27,12 +27,7 @@ source ./venv/bin/activate # Windowsの場合は .\venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-4. pdf用のディレクトリを作成します
-```bash
-mkdir ./app/pdf
-```
-
-5. 環境変数を設定します。`.env.example`をコピーしてプロジェクトルートに、`.env`ファイルを作成し、必要なAPI_KEYなどを設定します。
+4. 環境変数を設定します。`.env.example`をコピーしてプロジェクトルートに、`.env`ファイルを作成し、必要なAPI_KEYなどを設定します。
 
 ```.env
 # Google CloudのProjectID
