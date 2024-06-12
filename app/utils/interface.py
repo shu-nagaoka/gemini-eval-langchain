@@ -8,8 +8,8 @@ iface = gr.Interface(
         gr.Textbox(label="質問を入力してください")
     ],
     outputs=[
-        gr.Textbox(label="新規PDFからの回答"),
-        gr.Textbox(label="既存DBからの回答"),
+        gr.Textbox(label="システムからの回答"),
+        gr.Textbox(label="ベクトルDBからの回答"),
         gr.Textbox(label="評価結果サマリー", max_lines=20),
         gr.Textbox(label="評価結果ディティール", max_lines=100),
     ],

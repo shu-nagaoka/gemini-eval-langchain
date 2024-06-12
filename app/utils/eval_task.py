@@ -4,16 +4,21 @@ import anyio
 import asyncio
 import google.generativeai as genai
 from dotenv import load_dotenv
+import os
 load_dotenv()
 
+GEMINI_MODEL = os.getenv('GEMINI_MODEL')
 
 import logging
 from datetime import datetime
 current_date = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
-log_filename = f"logs-{current_date}.log"
-logging.basicConfig(filename=log_filename,
-                    level=logging.DEBUG,
-                    format='%(asctime)s - %(levelname)s - %(message)s')
+
+log_directory = os.path.join(os.path.dirname(__file__), '..', 'logs')
+os.makedirs(log_directory, exist_ok=True)
+log_filename = os.path.join(log_directory, f"logs-{current_date}.log")
+
+
+logging.basicConfig(filename=log_filename, level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 async def evaluate_rag(query, context, answer, instruction=""):
     """RAGの評価を行い、評価結果のサマリーと詳細を返す"""
@@ -86,7 +91,7 @@ async def evaluate_rag(query, context, answer, instruction=""):
     eval_result = await anyio.to_thread.run_sync(run_eval_task)
     logging.info(eval_result)
 
-    model = genai.GenerativeModel('gemini-1.5-flash-001')
+    model = genai.GenerativeModel(GEMINI_MODEL)
     formatted_metrics_table = model.generate_content(
         f"{eval_result}の評価結果の詳細を、{score_sample_new}の指標を参考にしながら、簡潔に箇条書きで構造化して評価してください。\n"
         f"{score_sample_new}は文中に表記させないでください。\n"
