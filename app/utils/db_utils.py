@@ -9,7 +9,7 @@ load_dotenv()
 
 GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
 PERSIST_DIRECTORY = os.path.join(os.path.dirname(__file__), '..', 'db')
-SIMILARITY_SEARCH_L = os.getenv('SIMILARITY_SEARCH_L')
+SIMILARITY_SEARCH_K = os.getenv('SIMILARITY_SEARCH_K')
 GEMINI_MODEL = os.getenv('GEMINI_MODEL')
 
 
@@ -44,7 +44,7 @@ def format_eval_summary(eval_summary):
 async def get_answer_from_db(query):
     """既存のベクトルDBから回答を取得する"""
     logging.info(f"get_answer_from_db関数: {query}")
-    results = vectorstore.similarity_search(query, k=int(SIMILARITY_SEARCH_L))
+    results = vectorstore.similarity_search(query, k=int(SIMILARITY_SEARCH_K))
     logging.info(f"get_answer_from_db関数:{results}")
 
     if results:
